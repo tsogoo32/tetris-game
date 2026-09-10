@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Modern Tetris</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="game-wrapper">
+
+        <!-- =========================
+             LEFT PANEL
+        ========================== -->
+
+        <section class="left-panel">
+
+            <h1>♜ TETRIS</h1>
+
+            <div class="score-box">
+                <span>SCORE</span>
+                <strong id="score">0</strong>
+            </div>
+
+            <div class="score-box">
+                <span>HIGH SCORE</span>
+                <strong id="highScore">0</strong>
+            </div>
+
+            <div class="score-box">
+                <span>LEVEL</span>
+                <strong id="level">1</strong>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             GAME SECTION
+        ========================== -->
+
+        <section class="game-section">
+
+            <div class="game-board-wrapper">
+
+                <canvas
+                    id="gameCanvas"
+                    width="300"
+                    height="600">
+                </canvas>
+
+
+                <!-- =========================
+                     HOME MENU
+                ========================== -->
+
+                <div id="homeScreen" class="overlay home-screen">
+
+                    <div class="home-content">
+
+                        <div class="logo">
+                            TETRIS
+                        </div>
+
+                        <p class="subtitle">
+                            Modern Edition
+                        </p>
+
+
+                        <div class="menu-buttons">
+
+                            <button
+                                id="playButton"
+                                class="main-button">
+                                🎮 PLAY
+                            </button>
+
+                            <button
+                                id="scoresButton">
+                                🏆 HIGH SCORE
+                            </button>
+
+                            <button
+                                id="howToPlayButton">
+                                ❓ HOW TO PLAY
+                            </button>
+
+                            <button
+                                id="settingsButton">
+                                ⚙️ SETTINGS
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     HIGH SCORE
+                ========================== -->
+
+                <div
+                    id="scoresScreen"
+                    class="overlay hidden">
+
+                    <div class="menu-panel">
+
+                        <h2>🏆 HIGH SCORE</h2>
+
+                        <div class="big-score">
+                            <span>BEST SCORE</span>
+
+                            <strong id="menuHighScore">
+                                0
+                            </strong>
+                        </div>
+
+                        <button
+                            id="scoresBackButton">
+                            ← BACK
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     HOW TO PLAY
+                ========================== -->
+
+                <div
+                    id="howToPlayScreen"
+                    class="overlay hidden">
+
+                    <div class="menu-panel">
+
+                        <h2>❓ HOW TO PLAY</h2>
+
+                        <div class="instructions">
+
+                            <p>⬅️ ➡️ Move</p>
+
+                            <p>⬆️ Rotate</p>
+
+                            <p>⬇️ Soft Drop</p>
+
+                            <p>SPACE — Hard Drop</p>
+
+                            <p>P — Pause</p>
+
+                            <p>ESC — Home</p>
+
+                        </div>
+
+                        <button
+                            id="howToPlayBackButton">
+                            ← BACK
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     SETTINGS
+                ========================== -->
+
+                <div
+                    id="settingsScreen"
+                    class="overlay hidden">
+
+                    <div class="menu-panel">
+
+                        <h2>⚙️ SETTINGS</h2>
+
+                        <div class="setting-row">
+
+                            <span>🎨 Theme</span>
+
+                            <strong>Modern</strong>
+
+                        </div>
+
+                        <div class="setting-row">
+
+                            <span>🔊 Sound</span>
+
+                            <strong>Coming Soon</strong>
+
+                        </div>
+
+                        <div class="setting-row">
+
+                            <span>📱 Mobile</span>
+
+                            <strong>Coming Soon</strong>
+
+                        </div>
+
+                        <button
+                            id="settingsBackButton">
+                            ← BACK
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     PAUSE
+                ========================== -->
+
+                <div
+                    id="pauseScreen"
+                    class="overlay hidden">
+
+                    <div class="menu-panel">
+
+                        <h2>⏸️ PAUSED</h2>
+
+                        <p>
+                            Press P to continue
+                        </p>
+
+                        <button
+                            id="pauseHomeButton">
+                            🏠 HOME
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     GAME OVER
+                ========================== -->
+
+                <div
+                    id="gameOverScreen"
+                    class="overlay hidden">
+
+                    <div class="menu-panel">
+
+                        <h2>GAME OVER</h2>
+
+                        <p>
+                            SCORE
+                        </p>
+
+                        <strong
+                            id="finalScore"
+                            class="final-score">
+                            0
+                        </strong>
+
+                        <div class="game-over-buttons">
+
+                            <button
+                                id="restartButton"
+                                class="main-button">
+                                🎮 PLAY AGAIN
+                            </button>
+
+                            <button
+                                id="gameOverHomeButton">
+                                🏠 HOME
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             RIGHT PANEL
+        ========================== -->
+
+        <section class="right-panel">
+
+            <div class="next-box">
+
+                <h3>NEXT</h3>
+
+                <canvas
+                    id="nextCanvas"
+                    width="120"
+                    height="120">
+                </canvas>
+
+            </div>
+
+
+            <div class="controls-box">
+
+                <h3>CONTROLS</h3>
+
+                <p>⬅️ ➡️ Move</p>
+                <p>⬆️ Rotate</p>
+                <p>⬇️ Soft Drop</p>
+                <p>SPACE Hard Drop</p>
+                <p>P Pause</p>
+                <p>ESC Home</p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
