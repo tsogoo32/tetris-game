@@ -1,330 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Modern Tetris</title>
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Modern Tetris</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <div class="ambient-glow glow-one"></div>
+  <div class="ambient-glow glow-two"></div>
+  <div id="floatingBg" class="floating-bg" aria-hidden="true"></div>
 
-    <main class="game-wrapper">
+  <main class="app-shell">
+    <section class="game-wrapper" id="gameWrapper">
+      <aside class="left-panel">
+        <div class="side-card multiplayer-card">
+          <span class="eyebrow">GAME MODE</span>
+          <h3>MULTIPLAYER</h3>
+          <span class="status-pill">COMING SOON</span>
+          <p>Online multiplayer will be added in a future version.</p>
+        </div>
+        <div class="side-card future-card">
+          <span class="eyebrow">NEXT UPDATE</span>
+          <h3>MORE MODES</h3>
+          <span class="status-pill">COMING SOON</span>
+        </div>
+      </aside>
 
-        <!-- =========================
-             LEFT PANEL
-        ========================== -->
-
-        <section class="left-panel">
-
-            <h1>♜ TETRIS</h1>
-
-            <div class="score-box">
-                <span>SCORE</span>
-                <strong id="score">0</strong>
+      <section class="game-section">
+        <div class="board-header">
+          <div class="mini-brand">MODERN TETRIS</div>
+        </div>
+        <div class="game-board-wrapper" id="boardWrapper">
+          <canvas id="gameCanvas" width="300" height="600"></canvas>
+          <div id="countdownOverlay" class="countdown-overlay hidden">
+            <div id="countdownText">3</div>
+          </div>
+          <div id="pauseScreen" class="overlay hidden">
+            <div class="overlay-card">
+              <span class="eyebrow">GAME PAUSED</span>
+              <h2>PAUSED</h2>
+              <button id="resumeButton" class="primary-button">RESUME</button>
+              <button id="pauseSettingsButton" class="menu-button">SETTINGS</button>
+              <button id="pauseHomeButton" class="menu-button">HOME</button>
             </div>
-
-            <div class="score-box">
-                <span>HIGH SCORE</span>
-                <strong id="highScore">0</strong>
+          </div>
+          <div id="gameOverScreen" class="overlay hidden">
+            <div class="overlay-card">
+              <span class="eyebrow">RUN COMPLETE</span>
+              <h2>GAME OVER</h2>
+              <div class="final-score"><span>SCORE</span><strong id="finalScore">0</strong></div>
+              <button id="restartButton" class="primary-button">PLAY AGAIN</button>
+              <button id="gameOverHomeButton" class="menu-button">HOME</button>
             </div>
+          </div>
+        </div>
+        <div class="mobile-controls" id="mobileControls"></div>
+      </section>
 
-            <div class="score-box">
-                <span>LEVEL</span>
-                <strong id="level">1</strong>
+      <aside class="right-panel">
+        <div class="brand-block"><div class="tetris-wordmark">TETRIS</div></div>
+        <div class="score-box"><span>SCORE</span><strong id="score">0</strong></div>
+        <div class="score-box"><span>HIGH SCORE</span><strong id="highScore">0</strong></div>
+        <div class="score-box"><span>LEVEL</span><strong id="level">1</strong></div>
+        <div class="score-box"><span>LINES</span><strong id="lines">0</strong></div>
+        <div class="next-box"><span>NEXT</span><canvas id="nextCanvas" width="120" height="90"></canvas></div>
+        <div class="history-box"><span>GAME HISTORY</span><div id="historyList"></div></div>
+      </aside>
+    </section>
+
+    <section id="homeScreen" class="home-screen">
+      <div class="home-vignette"></div>
+      <div class="home-content">
+        <div class="home-copy">
+          <div class="logo-kicker">MODERN • PREMIUM • CLASSIC</div>
+          <h1 class="hero-logo">TETRIS</h1>
+          <p>Stack. Clear. Level up.</p>
+        </div>
+        <div class="home-layout">
+          <div class="home-side left-home">
+            <div class="home-card">
+              <span class="eyebrow">GAME MODE</span>
+              <h3>MULTIPLAYER</h3>
+              <span class="status-pill">COMING SOON</span>
             </div>
-
-        </section>
-
-
-        <!-- =========================
-             GAME SECTION
-        ========================== -->
-
-        <section class="game-section">
-
-            <div class="game-board-wrapper">
-
-                <canvas
-                    id="gameCanvas"
-                    width="300"
-                    height="600">
-                </canvas>
-
-
-                <!-- =========================
-                     HOME MENU
-                ========================== -->
-
-                <div id="homeScreen" class="overlay home-screen">
-
-                    <div class="home-content">
-
-                        <div class="logo">
-                            TETRIS
-                        </div>
-
-                        <p class="subtitle">
-                            Modern Edition
-                        </p>
-
-
-                        <div class="menu-buttons">
-
-                            <button
-                                id="playButton"
-                                class="main-button">
-                                🎮 PLAY
-                            </button>
-
-                            <button
-                                id="scoresButton">
-                                🏆 HIGH SCORE
-                            </button>
-
-                            <button
-                                id="howToPlayButton">
-                                ❓ HOW TO PLAY
-                            </button>
-
-                            <button
-                                id="settingsButton">
-                                ⚙️ SETTINGS
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =========================
-                     HIGH SCORE
-                ========================== -->
-
-                <div
-                    id="scoresScreen"
-                    class="overlay hidden">
-
-                    <div class="menu-panel">
-
-                        <h2>🏆 HIGH SCORE</h2>
-
-                        <div class="big-score">
-                            <span>BEST SCORE</span>
-
-                            <strong id="menuHighScore">
-                                0
-                            </strong>
-                        </div>
-
-                        <button
-                            id="scoresBackButton">
-                            ← BACK
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =========================
-                     HOW TO PLAY
-                ========================== -->
-
-                <div
-                    id="howToPlayScreen"
-                    class="overlay hidden">
-
-                    <div class="menu-panel">
-
-                        <h2>❓ HOW TO PLAY</h2>
-
-                        <div class="instructions">
-
-                            <p>⬅️ ➡️ Move</p>
-
-                            <p>⬆️ Rotate</p>
-
-                            <p>⬇️ Soft Drop</p>
-
-                            <p>SPACE — Hard Drop</p>
-
-                            <p>P — Pause</p>
-
-                            <p>ESC — Home</p>
-
-                        </div>
-
-                        <button
-                            id="howToPlayBackButton">
-                            ← BACK
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =========================
-                     SETTINGS
-                ========================== -->
-
-                <div
-                    id="settingsScreen"
-                    class="overlay hidden">
-
-                    <div class="menu-panel">
-
-                        <h2>⚙️ SETTINGS</h2>
-
-                        <div class="setting-row">
-
-                            <span>🎨 Theme</span>
-
-                            <strong>Modern</strong>
-
-                        </div>
-
-                        <div class="setting-row">
-
-                            <span>🔊 Sound</span>
-
-                            <strong>Coming Soon</strong>
-
-                        </div>
-
-                        <div class="setting-row">
-
-                            <span>📱 Mobile</span>
-
-                            <strong>Coming Soon</strong>
-
-                        </div>
-
-                        <button
-                            id="settingsBackButton">
-                            ← BACK
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =========================
-                     PAUSE
-                ========================== -->
-
-                <div
-                    id="pauseScreen"
-                    class="overlay hidden">
-
-                    <div class="menu-panel">
-
-                        <h2>⏸️ PAUSED</h2>
-
-                        <p>
-                            Press P to continue
-                        </p>
-
-                        <button
-                            id="pauseHomeButton">
-                            🏠 HOME
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =========================
-                     GAME OVER
-                ========================== -->
-
-                <div
-                    id="gameOverScreen"
-                    class="overlay hidden">
-
-                    <div class="menu-panel">
-
-                        <h2>GAME OVER</h2>
-
-                        <p>
-                            SCORE
-                        </p>
-
-                        <strong
-                            id="finalScore"
-                            class="final-score">
-                            0
-                        </strong>
-
-                        <div class="game-over-buttons">
-
-                            <button
-                                id="restartButton"
-                                class="main-button">
-                                🎮 PLAY AGAIN
-                            </button>
-
-                            <button
-                                id="gameOverHomeButton">
-                                🏠 HOME
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+            <div class="home-card compact"><span class="eyebrow">FUTURE UPDATE</span><h3>MORE MODES</h3><span class="status-pill">COMING SOON</span></div>
+          </div>
+          <div class="home-center">
+            <div class="home-menu">
+              <button id="playButton" class="home-play">PLAY</button>
+              <button id="scoresButton" class="home-button">HIGH SCORE</button>
+              <button id="settingsButton" class="home-button">SETTINGS</button>
+              <button id="howToPlayButton" class="home-button">HOW TO PLAY</button>
             </div>
+            <div class="home-high-score">BEST <strong id="menuHighScore">0</strong></div>
+          </div>
+          <div class="home-side right-home">
+            <div class="home-card stat-card"><span class="eyebrow">CURRENT BEST</span><strong id="homeBestScore">0</strong><small>HIGH SCORE</small></div>
+            <div class="home-card"><span class="eyebrow">GAME HISTORY</span><div id="homeHistoryList"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        </section>
+    <section id="scoresScreen" class="menu-screen hidden">
+      <div class="menu-card">
+        <span class="eyebrow">STATISTICS</span><h2>HIGH SCORE</h2>
+        <div class="big-score" id="menuScoreValue">0</div>
+        <div class="stats-grid"><div><span>BEST SCORE</span><strong id="statsBestScore">0</strong></div><div><span>BEST LEVEL</span><strong id="statsBestLevel">1</strong></div><div><span>LINES CLEARED</span><strong id="statsLines">0</strong></div><div><span>GAMES PLAYED</span><strong id="statsGames">0</strong></div></div>
+        <div id="fullHistoryList" class="full-history"></div>
+        <button id="scoresBackButton" class="menu-button">BACK</button>
+      </div>
+    </section>
 
+    <section id="howToPlayScreen" class="menu-screen hidden">
+      <div class="menu-card">
+        <span class="eyebrow">CONTROLS</span><h2>HOW TO PLAY</h2>
+        <div class="instructions"><p><b>← / A</b> Move left</p><p><b>→ / D</b> Move right</p><p><b>↓ / S</b> Soft drop</p><p><b>↑ / W</b> Rotate</p><p><b>SPACE</b> Hard drop</p><p><b>P</b> Pause</p><p><b>ESC</b> Home</p></div>
+        <button id="howToPlayBackButton" class="menu-button">BACK</button>
+      </div>
+    </section>
 
-        <!-- =========================
-             RIGHT PANEL
-        ========================== -->
+    <section id="settingsScreen" class="menu-screen hidden">
+      <div class="menu-card settings-card">
+        <span class="eyebrow">PREFERENCES</span><h2>SETTINGS</h2>
+        <div class="settings-content">
+          <div class="settings-row"><span>Sound Effects</span><button class="settings-toggle active" data-setting="sfx">ON</button></div>
+          <div class="settings-row"><span>Music</span><button class="settings-toggle" data-setting="music">OFF</button></div>
+          <div class="settings-row"><span>SFX</span><button class="settings-toggle active" data-setting="sfx2">ON</button></div>
+          <div class="settings-row"><span>Volume</span><input id="volumeSlider" type="range" min="0" max="100" value="70"></div>
+          <div class="settings-section-title">CONTROLS</div>
+          <div class="settings-row"><span>PC Keyboard</span><strong>ARROWS / WASD / SPACE / P</strong></div>
+          <div class="settings-row"><span>Mobile Touch Controls</span><button id="mobileToggle" class="settings-toggle active">ON</button></div>
+          <div class="settings-section-title">GAME MODE</div>
+          <div class="settings-row"><span>Classic</span><strong>ACTIVE</strong></div>
+          <div class="settings-row"><span>Multiplayer</span><strong class="coming-soon">COMING SOON</strong></div>
+        </div>
+        <button id="settingsBackButton" class="menu-button">BACK</button>
+      </div>
+    </section>
+  </main>
 
-        <section class="right-panel">
-
-            <div class="next-box">
-
-                <h3>NEXT</h3>
-
-                <canvas
-                    id="nextCanvas"
-                    width="120"
-                    height="120">
-                </canvas>
-
-            </div>
-
-
-            <div class="controls-box">
-
-                <h3>CONTROLS</h3>
-
-                <p>⬅️ ➡️ Move</p>
-                <p>⬆️ Rotate</p>
-                <p>⬇️ Soft Drop</p>
-                <p>SPACE Hard Drop</p>
-                <p>P Pause</p>
-                <p>ESC Home</p>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
