@@ -1013,3 +1013,46 @@ drawNextPiece();
 
 // Show HOME on startup
 showHome();
+// Арын хөгжим холбох хэсэг
+const bgMusic = new Audio('Aaron Smith - Dancin - Krono Remix (Official Video) ft. Luvli.mp3');
+bgMusic.loop = true;
+
+function updateMusicState() {
+  if (settings.music && !isPaused && !gameOver && !document.getElementById("homeScreen").classList.contains("hidden")) {
+    bgMusic.volume = (settings.volume / 100) * 0.5;
+    bgMusic.play().catch(() => {});
+  } else {
+    bgMusic.pause();
+  }
+}
+
+// Эвентүүдэд хөгжмийн удирдлагыг холбох
+document.getElementById("playButton")?.addEventListener("click", () => {
+  setTimeout(() => updateMusicState(), 1600);
+});
+
+document.getElementById("restartButton")?.addEventListener("click", () => {
+  setTimeout(() => updateMusicState(), 1600);
+});
+
+document.getElementById("inGamePauseBtn")?.addEventListener("click", () => {
+  bgMusic.pause();
+});
+
+document.getElementById("resumeButton")?.addEventListener("click", () => {
+  setTimeout(() => updateMusicState(), 1600);
+});
+
+document.getElementById("pauseHomeButton")?.addEventListener("click", () => {
+  bgMusic.pause();
+  bgMusic.currentTime = 0;
+});
+
+document.getElementById("gameOverHomeButton")?.addEventListener("click", () => {
+  bgMusic.pause();
+  bgMusic.currentTime = 0;
+});
+
+document.getElementById("musicToggle")?.addEventListener("click", () => {
+  setTimeout(() => updateMusicState(), 100);
+});
