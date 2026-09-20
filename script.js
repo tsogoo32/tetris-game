@@ -1013,6 +1013,7 @@ drawNextPiece();
 
 // Show HOME on startup
 showHome();
+
 // Арын хөгжим холбох хэсэг
 const bgMusic = new Audio('Aaron Smith - Dancin - Krono Remix (Official Video) ft. Luvli.mp3');
 bgMusic.loop = true;
@@ -1026,7 +1027,7 @@ function updateMusicState() {
   }
 }
 
-// Эвентүүдэд хөгжмийн удирдлагыг холбох
+// Товчлууруудад хөгжмийн удирдлагыг холбох
 document.getElementById("playButton")?.addEventListener("click", () => {
   setTimeout(() => updateMusicState(), 1600);
 });
